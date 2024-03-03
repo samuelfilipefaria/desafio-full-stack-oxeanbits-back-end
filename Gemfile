@@ -71,3 +71,5 @@ end
 gem "sidekiq", "~> 7.2"
 
 gem "rspec-rails", "~> 6.1"
+
+gem "rack-cors", "~> 2.0"
