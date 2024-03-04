@@ -10,4 +10,5 @@ Rails.application.routes.draw do
 
   post "/login", to: "sessions#create"
   post "/movies/bulk_create", to: "movies#bulk_create"
+  post "/movies/bulk_rating", to: "movies#bulk_rating"
 end

@@ -19,6 +19,10 @@ class MoviesController < ApplicationController
     CreateMovieInBulkJob.perform_async(params[:movies_params].to_json)
   end
 
+  def bulk_rating
+    RatingMovieInBulkJob.perform_async(params[:rating_params].to_json, user_id_by_token)
+  end
+
   private
 
   def movie_params
