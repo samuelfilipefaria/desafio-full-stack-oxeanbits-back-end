@@ -1,24 +1,17 @@
 class MoviesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authorize_request
 
   def index
     @movies = Movie.all
-    respond_to do |format|
-      format.html
-      format.json { render json: @movies.to_json(methods: :average_score) }
-    end
-  end
-
-  def new
-    @movie = Movie.new
+    render json: @movies.to_json(methods: :average_score)
   end
 
   def create
     @movie = Movie.new(movie_params)
     if @movie.save
-      redirect_to movies_path, notice: "Movie was successfully created."
+      render json: {notice: "Movie was successfully created."}, status: 200
     else
-      render :new
+      render json: {error: "Error creating movie!"}, status: 400
     end
   end
 
