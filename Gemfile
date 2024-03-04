@@ -75,3 +75,5 @@ gem "rspec-rails", "~> 6.1"
 gem "rack-cors", "~> 2.0"
 
 gem "jwt", "~> 2.8"
+
+gem "activerecord-import", "~> 1.5"
