@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   resources :user_movies, only: [:create, :update]
 
   post "/login", to: "sessions#create"
+  post "/movies/bulk_create", to: "movies#bulk_create"
 end
