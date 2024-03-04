@@ -1,22 +1,21 @@
 class ApplicationController < ActionController::API
-  # protect_from_forgery with: :exception
-  helper_method :current_user, :logged_in?
+  def authorize_request
+    header = request.headers['Authorization']
+    header = header.split(' ').last if header
 
-  private
-
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-
-  def logged_in?
-    # !!current_user
-    true
-  end
-
-  def authenticate_user!
-    unless logged_in?
-      flash[:alert] = "You must be logged in to access this page"
-      redirect_to login_path
+    begin
+      decoded = JsonWebToken.decode(header)
+      current_user = User.find(decoded[:user_id])
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { errors: e.message }, status: :unauthorized
+    rescue JWT::DecodeError => e
+      render json: { errors: e.message }, status: :unauthorized
     end
+  end
+
+  def generate_new_token(user_id, username)
+    token = JsonWebToken.encode(user_id: user_id)
+    time = Time.now + 24.hours.to_i
+    render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"), username: username }, status: :ok
   end
 end
