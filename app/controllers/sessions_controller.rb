@@ -1,20 +1,10 @@
 class SessionsController < ApplicationController
-  def new
-  end
-
   def create
     user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect_to movies_path
+    if user&.authenticate(params[:password])
+      generate_new_token(user.id, user.username)
     else
-      flash.now[:alert] = "Invalid email or password"
-      render :new
+      render json: { error: 'unauthorized' }, status: :unauthorized
     end
-  end
-
-  def destroy
-    session[:user_id] = nil
-    redirect_to root_path
   end
 end
