@@ -3,7 +3,15 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    render json: @movies.to_json(methods: :average_score)
+    @movies = JSON.parse(@movies.to_json(methods: :average_score))
+
+    @movies.each do |movie|
+      @user_movie = UserMovie.where("user_id = ? AND movie_id = ?", user_id_by_token, movie["id"]).first
+
+      movie["user_score"] = @user_movie ? @user_movie.score : "Não avaliado"
+    end
+
+    render json: @movies
   end
 
   def create
