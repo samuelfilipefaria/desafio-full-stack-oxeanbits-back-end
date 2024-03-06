@@ -16,4 +16,16 @@ class UsersController < ApplicationController
       render json: {error: "Error creating user!"}, status: 400
     end
   end
+
+  def is_admin
+    @user = User.find(user_id_by_token)
+
+    render json: {error: "Error finding user!"}, status: 400 unless @user
+
+    if @user.admin
+      render json: {is_admin: "true"}, status: 200
+    else
+      render json: {is_admin: "false"}, status: 200
+    end
+  end
 end
