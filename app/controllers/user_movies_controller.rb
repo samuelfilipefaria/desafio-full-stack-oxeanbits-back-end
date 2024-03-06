@@ -16,7 +16,7 @@ class UserMoviesController < ApplicationController
   end
 
   def update
-    @user_movie = UserMovie.where("user_id = ? AND movie_id = ?", user_id_by_token, params[:movie_id])
+    @user_movie = UserMovie.where("user_id = ? AND movie_id = ?", user_id_by_token, params[:id])
 
     render json: {error: "Error finding movie score!"}, status: 400 unless @user_movie
 
