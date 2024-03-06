@@ -36,6 +36,8 @@ Nenhuma das classes/tabelas originais da aplicação template foram modificadas,
 
 ![class_diagram](https://github.com/samuelfilipefaria/desafio-full-stack-oxeanbits-back-end/assets/102987906/de68b21d-8153-4193-bf53-5cb0e1cbcf41)
 
+*Diagrama de classes*
+
 Como é possível perceber, os relacionamentos originais foram mantidos, embora tenha pensado em modificar o nome da tabela UserMovie para Rating ou MovieRating (já que graças ao `score` ele é uma entitade à parte, mais do que apenas uma ferramenta para unir User e Movie em sua relação muitos para muitos), preferi manter pois não fazia parte do desafio.
 
 ## O que mudou
